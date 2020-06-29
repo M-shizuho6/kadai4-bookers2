@@ -1,0 +1,84 @@
+<div class="container">
+	<div class="row">
+		<% if flash[:notice] %>
+	      <div class="flash">
+	      	<%= flash[:notice] %>
+	    </div>
+	    <% end %>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-3">
+			<div>
+			<h2>User info</h2>
+			<div>
+				<%= attachment_image_tag @userbook.user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg" %>
+			</div>
+			<div>
+				<table class="table">
+					<tr>
+						<th scope="row">
+							<td>name</td>
+							<td><%= @userbook.user.name %></td>
+						</th>
+					</tr>
+					<tr>
+						<th scope="row">
+							<td>introduction</td>
+							<td><%= @userbook.user.introduction %></td>
+						</th>
+					</tr>
+				</table>
+			</div>
+			<div>
+				<%= link_to edit_user_path(@userbook.user) do %>
+				<span class="btn btn-sm btn-default btn-block glyphicon glyphicon-wrench" aria-hidden="true"></span>
+				<% end %>
+			</div>
+			</div>
+
+			<div>
+				<h2>New book</h2>
+			    <%= form_for(@book) do |f| %>
+	    		<div>
+		    		<h5>Title</h5>
+			    	<%= f.text_field :title, class: "form-control" %>
+		    	</div>
+			    <div>
+			    	<h5>Opinion</h5>
+				    <%= f.text_area :body, class: "form-control" %>
+			    </div>
+			    <div><h4> </h4></div>
+			    <div>
+	     			<%= f.submit "Create Book", class: "btn btn-sm btn-primary btn-block active"  %>
+		     	</div>
+	    		<% end %>
+	    	</div>
+		</div>
+
+		<div class="col-xs-9">
+			<h2>Book detail</h2>
+			<table class="table">
+				<tr>
+					<th scope="row">
+						<td><%= link_to user_path(@userbook.user) do %>
+							  <%= attachment_image_tag @userbook.user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg" %></br>
+							<%= @userbook.user.name %>
+							<% end %>
+						</td>
+					    <td><%= @userbook.title %></td>
+					    <td><%= @userbook.body %></td>
+					    <% if @userbook.user == current_user %>
+			    		<td>
+				    		<%= link_to  edit_book_path(@userbook) do %><span class="btn btn-sm btn-success ">Edit</span><% end %>
+				    	</td>
+				    	<td>
+		    				<%= link_to book_path, method: :delete do %><span class="btn btn-sm btn-danger">Destroy</span><% end %>
+			    		</td>
+			    		<% end %>
+					</th>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>

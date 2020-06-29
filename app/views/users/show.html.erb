@@ -1,0 +1,77 @@
+<div class="container">
+	<div class="row">
+		<% if flash[:notice] %>
+	      <div class="flash">
+	      	<%= flash[:notice] %>
+	    </div>
+	    <% end %>
+	</div>
+	
+	<div class="row">
+		<div class="col-xs-3">
+			<div>
+			<h2>User info</h2>
+			<div>
+					<%= attachment_image_tag @user, :profile_image, :fill, 100, 100, format: 'jpeg', fallback: "no_image.jpg" %>
+			</div>
+			<div>
+				<table class="table">
+					<tr>
+						<th scope="row">
+							<td>name</td>
+							<td><%= @user.name %></td>
+						</th>
+					</tr>
+					<tr>
+						<th scope="row">
+							<td>introduction</td>
+							<td><%= @user.introduction %></td>
+						</th>
+					</tr>
+				</table>
+			</div>
+			<div>
+				<%= link_to edit_user_path(@user) do %>
+				<span class="btn btn-sm btn-default btn-block glyphicon glyphicon-wrench" aria-hidden="true"></span>
+				<% end %>
+			</div>
+			</div>
+
+			<div>
+				<h2>New book</h2>
+			    <%= form_for(@book) do |f| %>
+	    		<div>
+		    		<h4>Title</h4>
+			    	<%= f.text_field :title, class: "form-control" %>
+		    	</div>
+			    <div>
+			    	<h4>Opinion</h4>
+				    <%= f.text_area :body, class: "form-control" %>
+			    </div>
+			    <div><h4> </h4></div>
+			    <div>
+	     			<%= f.submit "Create Book", class: "btn btn-sm btn-primary btn-block active"  %>
+		     	</div>
+	    		<% end %>
+	    	</div>
+		</div>
+
+		<div class="col-xs-9">
+			<h2>Books</h2>
+			<table class="table">
+				<tr>
+					<th>image</th>
+					<th>Title</th>
+					<th>Opinion</th>
+				</tr>
+				<% @userbooks.each do |f| %>
+				<tr>
+					<td><%= link_to attachment_image_tag(f.user, :profile_image, :fill, 60, 60, format: 'jpeg', fallback: "no_image.jpg"), user_path(f.user) %></td>
+					<td><%= link_to f.title, book_path(f) %></td>
+					<td><%= f.body %></td>
+				</tr>
+				<% end %>
+			</table>
+		</div>
+	</div>
+</div>
